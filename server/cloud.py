@@ -8,29 +8,31 @@ import logging
 
 class CloudServices:
 
-    ZONES = [
-        'Norte',
-        'Sur',
-        'Oriente',
-        'Occidente',
-        'Regiones'
-    ]
+    ZONES = \
+        [
+            'Norte',
+            'Sur',
+            'Oriente',
+            'Occidente',
+            'Regiones'
+        ]
 
-    COLUMNS_SHEETS = {
-        'farmacia': 'Cliente',
-        'factura': 'Factura',
-        'cajas': 'Cajas',
-        'bolsas': 'Bolsas',
-        'lios': 'Lios',
-        'valor': 'Valor a cobrar',
-        'cobrado': 'Valor cobrado',
-        'empacador': 'Empacador',
-        'fecha': 'Hora empaque',
-        'mensajero': 'Mensajero',
-        'hora': 'Hora salida',
-        'notas': 'Observaciones',
-        'uid': 'uid'
-    }
+    COLUMNS_SHEETS = \
+        {
+            'farmacia': 'Cliente',
+            'factura': 'Factura',
+            'cajas': 'Cajas',
+            'bolsas': 'Bolsas',
+            'lios': 'Lios',
+            'valor': 'Valor a cobrar',
+            'cobrado': 'Valor cobrado',
+            'empacador': 'Empacador',
+            'fecha': 'Hora empaque',
+            'mensajero': 'Mensajero',
+            'hora': 'Hora salida',
+            'notas': 'Observaciones',
+            'uid': 'uid'
+        }
 
     MAX_COLS = len(COLUMNS_SHEETS)
     MAX_ROWS = 200

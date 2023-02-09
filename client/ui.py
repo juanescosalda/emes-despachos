@@ -8,12 +8,14 @@ Created on Wed Dec 14 17:31:01 2022
 # %% PyQT UI test
 import os
 import sys
+sys.path.append('.')
+
 import logging
-from server.dispatches import EmesDispatch
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from PyQt6.uic import loadUi
+from server.dispatches import EmesDispatch
 from client.worker import Worker
 import client.logo_emes as logo_emes
 
@@ -22,7 +24,7 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        loadUi("gui.ui", self)
+        loadUi("./client/gui.ui", self)
 
         # Init threadpool
         self.threadpool = QThreadPool()

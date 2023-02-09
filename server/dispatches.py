@@ -6,7 +6,7 @@ import locale
 import server.utils as utils
 from firebase_admin.db import ListenerRegistration
 
-# locale.setlocale(locale.LC_ALL, 'en_US.UTF8')
+locale.setlocale(locale.LC_ALL, 'en_US.UTF8')
 
 
 class EmesDispatch:
