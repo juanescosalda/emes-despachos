@@ -4,14 +4,9 @@ from server.cloud import CloudServices
 import logging
 import locale
 import server.utils as utils
-from gspread.exceptions import APIError
 from firebase_admin.db import ListenerRegistration
 
-logging.basicConfig(filename='dispatches.log',
-                    format='%(asctime)s - %(message)s',
-                    datefmt='%d-%b-%y %H:%M:%S')
-
-locale.setlocale(locale.LC_ALL, 'en_US.UTF8')
+# locale.setlocale(locale.LC_ALL, 'en_US.UTF8')
 
 
 class EmesDispatch:
@@ -217,9 +212,9 @@ class EmesDispatch:
                             value
                         )
 
-        except (KeyError, TypeError, ValueError, APIError):
+        except Exception as e:
             logging.error(
-                'Error al actualizar el archivo de Google Sheets',
+                f'Error {e} al actualizar el archivo de Google Sheets',
                 exc_info=True
             )
 
