@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(920, 715)
+        Form.resize(920, 650)
         self.connectButton = QtWidgets.QPushButton(Form)
         self.connectButton.setGeometry(QtCore.QRect(40, 40, 380, 25))
         self.connectButton.setStyleSheet("QPushButton {\n"
@@ -40,35 +40,35 @@ class Ui_Form(object):
 "}")
         self.reportPartialButton.setObjectName("reportPartialButton")
         self.label = QtWidgets.QLabel(Form)
-        self.label.setGeometry(QtCore.QRect(40, 360, 125, 20))
+        self.label.setGeometry(QtCore.QRect(40, 270, 125, 20))
         self.label.setObjectName("label")
         self.editURLDB = QtWidgets.QLineEdit(Form)
         self.editURLDB.setEnabled(True)
-        self.editURLDB.setGeometry(QtCore.QRect(220, 360, 650, 22))
+        self.editURLDB.setGeometry(QtCore.QRect(220, 270, 650, 22))
         self.editURLDB.setInputMask("")
         self.editURLDB.setText("")
         self.editURLDB.setMaxLength(32767)
         self.editURLDB.setObjectName("editURLDB")
         self.label_2 = QtWidgets.QLabel(Form)
-        self.label_2.setGeometry(QtCore.QRect(40, 420, 125, 16))
+        self.label_2.setGeometry(QtCore.QRect(40, 330, 125, 16))
         self.label_2.setObjectName("label_2")
         self.editIDPlanillas = QtWidgets.QLineEdit(Form)
-        self.editIDPlanillas.setGeometry(QtCore.QRect(220, 420, 650, 22))
+        self.editIDPlanillas.setGeometry(QtCore.QRect(220, 330, 650, 22))
         self.editIDPlanillas.setObjectName("editIDPlanillas")
         self.label_3 = QtWidgets.QLabel(Form)
-        self.label_3.setGeometry(QtCore.QRect(40, 480, 125, 16))
+        self.label_3.setGeometry(QtCore.QRect(40, 390, 125, 16))
         self.label_3.setObjectName("label_3")
         self.editIDRemisiones = QtWidgets.QLineEdit(Form)
-        self.editIDRemisiones.setGeometry(QtCore.QRect(220, 480, 650, 22))
+        self.editIDRemisiones.setGeometry(QtCore.QRect(220, 390, 650, 22))
         self.editIDRemisiones.setObjectName("editIDRemisiones")
         self.editJsonPath = QtWidgets.QLineEdit(Form)
-        self.editJsonPath.setGeometry(QtCore.QRect(220, 540, 650, 22))
+        self.editJsonPath.setGeometry(QtCore.QRect(220, 450, 650, 22))
         self.editJsonPath.setObjectName("editJsonPath")
         self.label_4 = QtWidgets.QLabel(Form)
-        self.label_4.setGeometry(QtCore.QRect(40, 540, 125, 16))
+        self.label_4.setGeometry(QtCore.QRect(40, 450, 125, 16))
         self.label_4.setObjectName("label_4")
         self.editVarsButton = QtWidgets.QPushButton(Form)
-        self.editVarsButton.setGeometry(QtCore.QRect(40, 660, 831, 25))
+        self.editVarsButton.setGeometry(QtCore.QRect(40, 580, 831, 25))
         self.editVarsButton.setStyleSheet("QPushButton {\n"
 "     background-color: rgb(141, 206, 233);\n"
 "    color: rgb(255, 255, 255);    \n"
@@ -81,30 +81,17 @@ class Ui_Form(object):
 "}")
         self.editVarsButton.setObjectName("editVarsButton")
         self.label_5 = QtWidgets.QLabel(Form)
-        self.label_5.setGeometry(QtCore.QRect(0, 0, 920, 720))
+        self.label_5.setGeometry(QtCore.QRect(0, 0, 920, 650))
         self.label_5.setStyleSheet("border-image: url(:/cct/logo_emes.png);\n"
 "background-color: rgb(255, 255, 255);")
         self.label_5.setText("")
         self.label_5.setObjectName("label_5")
         self.editJsonPathGS = QtWidgets.QLineEdit(Form)
-        self.editJsonPathGS.setGeometry(QtCore.QRect(220, 600, 650, 22))
+        self.editJsonPathGS.setGeometry(QtCore.QRect(220, 510, 650, 22))
         self.editJsonPathGS.setObjectName("editJsonPathGS")
         self.label_6 = QtWidgets.QLabel(Form)
-        self.label_6.setGeometry(QtCore.QRect(40, 600, 125, 16))
+        self.label_6.setGeometry(QtCore.QRect(40, 510, 125, 16))
         self.label_6.setObjectName("label_6")
-        self.reportFinalButton = QtWidgets.QPushButton(Form)
-        self.reportFinalButton.setGeometry(QtCore.QRect(40, 270, 190, 25))
-        self.reportFinalButton.setStyleSheet("QPushButton {\n"
-"     background-color: rgb(0, 150, 214);\n"
-"    color: rgb(255, 255, 255);    \n"
-"    border-style: solid;\n"
-"    border-width:1px;\n"
-"    border-radius:10px;\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: rgb(141, 206, 233);\n"
-"}")
-        self.reportFinalButton.setObjectName("reportFinalButton")
         self.distpachesReportButton = QtWidgets.QPushButton(Form)
         self.distpachesReportButton.setGeometry(QtCore.QRect(40, 190, 190, 25))
         self.distpachesReportButton.setStyleSheet("QPushButton {\n"
@@ -118,37 +105,16 @@ class Ui_Form(object):
 "    background-color: rgb(141, 206, 233);\n"
 "}")
         self.distpachesReportButton.setObjectName("distpachesReportButton")
-        self.calendarWidget = QtWidgets.QCalendarWidget(Form)
-        self.calendarWidget.setGeometry(QtCore.QRect(480, 40, 391, 261))
-        self.calendarWidget.setStyleSheet("QCalendarWidget QWidget {\n"
-"    background-color: rgb(0, 150, 214);\n"
-"    color: rgb(255, 255, 255);    \n"
-"}\n"
-"\n"
-"QCalendarWidget QAbstractItemView:enabled{\n"
-"    background-color: rgb(252, 252, 252);\n"
-"    color: black;\n"
-"}\n"
-"\n"
-"#qt_calendar_prevmonth {\n"
-"    background-color: rgb(141, 206, 233);\n"
-"    icon-size: 10px;\n"
-"}\n"
-"#qt_calendar_nextmonth {\n"
-"    background-color: rgb(141, 206, 233);\n"
-"    icon-size: 10px;\n"
-"}")
-        self.calendarWidget.setObjectName("calendarWidget")
         self.dateEditTreasury = QtWidgets.QDateEdit(Form)
         self.dateEditTreasury.setGeometry(QtCore.QRect(260, 110, 160, 22))
-        self.dateEditTreasury.setCalendarPopup(False)
+        self.dateEditTreasury.setAcceptDrops(False)
+        self.dateEditTreasury.setAutoFillBackground(False)
+        self.dateEditTreasury.setCalendarPopup(True)
         self.dateEditTreasury.setObjectName("dateEditTreasury")
         self.dateEditDispatches = QtWidgets.QDateEdit(Form)
         self.dateEditDispatches.setGeometry(QtCore.QRect(260, 190, 160, 22))
+        self.dateEditDispatches.setCalendarPopup(True)
         self.dateEditDispatches.setObjectName("dateEditDispatches")
-        self.dateEditReport = QtWidgets.QDateEdit(Form)
-        self.dateEditReport.setGeometry(QtCore.QRect(260, 270, 160, 22))
-        self.dateEditReport.setObjectName("dateEditReport")
         self.label_5.raise_()
         self.connectButton.raise_()
         self.reportPartialButton.raise_()
@@ -163,12 +129,9 @@ class Ui_Form(object):
         self.editVarsButton.raise_()
         self.editJsonPathGS.raise_()
         self.label_6.raise_()
-        self.reportFinalButton.raise_()
         self.distpachesReportButton.raise_()
-        self.calendarWidget.raise_()
         self.dateEditTreasury.raise_()
         self.dateEditDispatches.raise_()
-        self.dateEditReport.raise_()
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -184,8 +147,6 @@ class Ui_Form(object):
         self.label_4.setText(_translate("Form", "JSON Database path"))
         self.editVarsButton.setText(_translate("Form", "Editar variables"))
         self.label_6.setText(_translate("Form", "JSON Gspread path"))
-        self.reportFinalButton.setText(_translate("Form", "Generar Reporte"))
         self.distpachesReportButton.setText(_translate("Form", "Informe Despachos"))
         self.dateEditTreasury.setDisplayFormat(_translate("Form", "yyyy-MM-dd"))
         self.dateEditDispatches.setDisplayFormat(_translate("Form", "yyyy-MM-dd"))
-        self.dateEditReport.setDisplayFormat(_translate("Form", "yyyy-MM-dd"))

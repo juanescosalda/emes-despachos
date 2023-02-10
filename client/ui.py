@@ -10,6 +10,7 @@ import os
 import sys
 sys.path.append('.')
 
+import locale
 import logging
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
@@ -18,6 +19,15 @@ from PyQt6.uic import loadUi
 from server.dispatches import EmesDispatch
 from client.worker import Worker
 import client.logo_emes as logo_emes
+
+
+locale.setlocale(locale.LC_ALL, 'en_US.UTF8')
+
+logging.basicConfig(
+    filename='despachos.log',
+    format='%(asctime)s - %(message)s',
+    datefmt='%d-%b-%y %H:%M:%S'
+)
 
 
 class MainWindow(QMainWindow):
@@ -42,9 +52,6 @@ class MainWindow(QMainWindow):
         self.distpachesReportButton.clicked.connect(
             self.click_generate_dispatches_report
         )
-        self.reportFinalButton.clicked.connect(
-            self.click_generate_main_report
-        )
 
         # Initialize EmesDispatch object
         self.emes = None
@@ -57,7 +64,6 @@ class MainWindow(QMainWindow):
 
         self.dateEditTreasury.setDate(today)
         self.dateEditDispatches.setDate(today)
-        self.dateEditReport.setDate(today)
 
     def __set_line_edits_text(self) -> None:
         """
@@ -76,13 +82,13 @@ class MainWindow(QMainWindow):
         )
 
         self.editJsonPath.setText(
-            fr'C:\Users\{os.getlogin()}\Desktop\Emes despachos\emes-empaques-718c8b73c894.json'
-            # r'C:\Digital\emes-empaques-718c8b73c894.json'
+            # fr'C:\Users\{os.getlogin()}\Desktop\emes_despachos\emes-empaques-718c8b73c894.json'
+            r'C:\Digital\emes-empaques-718c8b73c894.json'
         )
 
         self.editJsonPathGS.setText(
-            fr'C:\Users\{os.getlogin()}\Desktop\Emes despachos\emes-empaques-gspread.json'
-            # r'C:\Digital\emes-empaques-gspread.json'
+            # fr'C:\Users\{os.getlogin()}\Desktop\emes_despachos\emes-empaques-gspread.json'
+            r'C:\Digital\emes-empaques-gspread.json'
         )
 
         # not modifications enabled
@@ -184,12 +190,6 @@ class MainWindow(QMainWindow):
         """
         self.__thread_generate_dispatches_report()
 
-    def click_generate_main_report(self):
-        """
-        Button click to generate main report
-        """
-        self.__thread_generate_main_report()
-
     def __thread_connect(self):
         """
         Add thread to create report Emes
@@ -248,19 +248,6 @@ class MainWindow(QMainWindow):
         """
         # worker
         worker = Worker(self.__generate_dispatches_report)
-        worker.signals.result.connect(self.print_output)
-        worker.signals.finished.connect(self.thread_complete)
-        worker.signals.progress.connect(self.progress_fn)
-
-        # start thread
-        self.threadpool.start(worker)
-
-    def __thread_generate_main_report(self):
-        """
-        Add thread to create report Emes
-        """
-        # worker
-        worker = Worker(self.__generate_main_report)
         worker.signals.result.connect(self.print_output)
         worker.signals.finished.connect(self.thread_complete)
         worker.signals.progress.connect(self.progress_fn)
@@ -363,25 +350,6 @@ class MainWindow(QMainWindow):
                 exc_info=True
             )
 
-    def __generate_main_report(self) -> None:
-        """
-        Generate main report (Consolidado)
-        """
-        try:
-            file = \
-                self.dateEditReport.date().toPyDate().strftime('%Y-%m-%d')
-
-            if self.emes is not None:
-                self.emes.generate_report(
-                    type="main",
-                    filename=file
-                )
-        except:
-            logging.error(
-                "Error al crear el reporte principal",
-                exc_info=True
-            )
-
     def closeEvent(self, event):
         """
         Close event
@@ -408,6 +376,6 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = MainWindow()
     window.setFixedWidth(920)
-    window.setFixedHeight(720)
+    window.setFixedHeight(650)
     window.show()
     sys.exit(app.exec())

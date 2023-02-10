@@ -719,14 +719,19 @@ class CloudServices:
 
         return deleted_values
 
-    def __get_sheet_names(self) -> list:
+    def __get_sheet_names(
+            self,
+            workbook: gspread.Spreadsheet) -> list:
         """
         Get names of all sheets of current Spreadsheet
 
+        Args:
+            workbook (gspread.Spreadsheet): Current Spreadsheet
+
         Returns:
-            list: names of sheets
+            list: Names of sheets
         """
-        return [ws.title for ws in self.workbook.worksheets()]
+        return [ws.title for ws in workbook.worksheets()]
 
     def __get_all_values(self) -> list:
         """
@@ -745,17 +750,21 @@ class CloudServices:
 
     def __exist_sheet(
             self,
+            workbook: gspread.Spreadsheet,
             sheet_name: str) -> bool:
         """
         Check if sheet exists
 
         Args:
-            sheet_name (str): sheet name
+            workbook (gspread.Spreadsheet): Current spreadsheet 
+            sheet_name (str): Sheet name
 
         Returns:
             bool: true if sheet exists
         """
-        worksheet_names = self.__get_sheet_names()
+        worksheet_names = self.__get_sheet_names(
+            workbook
+        )
 
         return sheet_name in worksheet_names
 
@@ -820,11 +829,13 @@ class CloudServices:
             tuple: Contains the Spreadsheet object, the Worksheet object, and a bool flag indicating if the sheet existed.
         """
         try:
-            sheet_exists = self.__exist_sheet(name)
             workbook = self.select_file(filename)
+            sheet_exists = self.__exist_sheet(workbook, name)
 
             if sheet_exists:
                 report_sheet = workbook.worksheet(name)
+
+                prev_values = report_sheet.get_all_values()[1:]
 
                 if reset:
                     report_sheet.resize(rows=1)
@@ -840,7 +851,9 @@ class CloudServices:
                     values=headers
                 )
 
-            return workbook, report_sheet, sheet_exists
+                prev_values = list()
+
+            return workbook, report_sheet, sheet_exists, prev_values
 
         except Exception as e:
             logging.error(
@@ -848,7 +861,24 @@ class CloudServices:
                 exc_info=True
             )
 
-            return None, None, False
+            return None, None, False, None
+
+    def __get_client_name(self, client: str) -> str:
+        """
+
+        Args:
+            client (str): Client name with address and name
+
+        Returns:
+            str: Client name
+        """
+        separator = '-'
+
+        if client.find(separator) != -1:
+            parts = client.split(separator)
+            return parts[0].strip()
+        else:
+            return client
 
     def _create_common_report(
             self,
@@ -878,13 +908,15 @@ class CloudServices:
                 'uid'
             ]
 
-        workbook, report_sheet, sheet_exists = \
+        workbook, report_sheet, sheet_exists, prev_values = \
             self.__create_report_sheet(
                 filename=filename,
                 name=name,
                 headers=headers,
                 reset=True
             )
+
+        prev_codes = {v[2]: v[6] for v in prev_values} if sheet_exists else {}
 
         if report_sheet is None:
             return {}
@@ -902,16 +934,23 @@ class CloudServices:
                 code = row[1]
 
                 if code == 0 or code not in code_values[1:]:
+                    client = self.__get_client_name(row[0])
+
+                    if code in prev_codes.keys():
+                        obs = prev_codes[code]
+                    else:
+                        obs = ''
+
                     if row[9] != '':
                         values = \
                             [
                                 row[9],
                                 sheet.title,
                                 row[1],
-                                row[0],
+                                client,
                                 utils.str_to_int(row[6]),
                                 row[11],
-                                '',
+                                obs,
                                 row[12],
                             ]
 
@@ -951,7 +990,7 @@ class CloudServices:
                     'range': {
                         'sheetId': report_sheet.id,
                         'dimension': 'COLUMNS',
-                        'startIndex': 6,
+                        'startIndex': 7 if name == 'Tesorería' else 6,
                         'endIndex': max_col
                     },
                     "properties": {
@@ -986,7 +1025,7 @@ class CloudServices:
                         'endIndex': 3
                     },
                     'properties': {
-                        'pixelSize': 100
+                        'pixelSize': 90
                     },
                     'fields': 'pixelSize'
                 }
@@ -1001,7 +1040,7 @@ class CloudServices:
                         'endIndex': 4
                     },
                     'properties': {
-                        'pixelSize': 350
+                        'pixelSize': 300
                     },
                     'fields': 'pixelSize'
                 }
@@ -1031,7 +1070,22 @@ class CloudServices:
                         'endIndex': 6
                     },
                     'properties': {
-                        'pixelSize': 450
+                        'pixelSize': 250
+                    },
+                    'fields': 'pixelSize'
+                }
+            })
+
+            body['requests'].append({
+                'updateDimensionProperties': {
+                    'range': {
+                        'sheetId': report_sheet.id,
+                        'dimension': 'COLUMNS',
+                        'startIndex': 6,
+                        'endIndex': 7
+                    },
+                    'properties': {
+                        'pixelSize': 200
                     },
                     'fields': 'pixelSize'
                 }
@@ -1255,7 +1309,7 @@ class CloudServices:
 
         # append multiple rows at once
         report_sheet.append_rows(
-            values=[[k]+list(v.values()) for k, v in data.items()]
+            values=[[k] + list(v.values()) for k, v in data.items()]
         )
 
         # get dimensiones
@@ -1481,7 +1535,7 @@ class CloudServices:
                 data[name]['lios'] += utils.safe_int(row[4])
 
         report_sheet.append_rows(
-            values=[[k]+list(v.values()) for k, v in data.items()]
+            values=[[k] + list(v.values()) for k, v in data.items()]
         )
 
         # get dimensiones
