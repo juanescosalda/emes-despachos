@@ -1,0 +1,16 @@
+# All json account services files
+*.json
+
+# Logging and debug registers
+*.log
+*.txt
+
+# Production
+dist
+build
+
+# Cache
+__pycache__
+
+# Testing functional file
+test.py
